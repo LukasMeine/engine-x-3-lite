@@ -1,0 +1,6 @@
+node_modules
+.env
+logs/
+.idea
+package-lock.json
+sessions
