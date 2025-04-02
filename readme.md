@@ -1,4 +1,4 @@
-# Engine-X
+# Engine-X v3 Lite Edition
 
 A secure, token-based redirection system that now uses an email confirmation page instead of CAPTCHA for human verification, along with advanced bot detection, OS-specific redirection, and an optional passive mode.
 
@@ -136,21 +136,13 @@ Instead of the old CAPTCHA flow, the login flow now uses an email confirmation p
    ```
    GET /login?id=<tokenid>
    ```  
-   - This generates a token and redirects the user to the confirmation page.
+   - This generates a token and redirects the user to the processing page.
 
 2. **Email Confirmation Page:**
    ```
-   GET /confirm?token=<generatedToken>&id=<tokenid>
-   ```  
-   - The user is prompted to enter their email.
-
-3. **Email Validation:**
+   GET /process?token=<generatedToken>&id=<tokenid>
    ```
-   POST /confirm/validate
-   ```  
-   - The submitted email is converted to Base64 and compared against the stored Base64 value (fetched from S3) that corresponds to the token.
-   - If the email matches, the user is redirected to an OS-specific exit URL.
-   - If the email does not match, the user is redirected to a Bot URL (e.g., `https://you-are-a-bot.com`).
+If moonito allows the request, the user is redirected straight away to the offer page
 
 ## Security Features
 
@@ -164,11 +156,6 @@ The system uses multiple factors to detect bots:
 ### Rate Limiting
 - 50 requests per minute per IP.
 - Configurable window and limit.
-
-### Email Confirmation and OS Redirection
-- Email verification replaces CAPTCHA.
-- OS-specific redirection sends users to URLs tailored for Windows, macOS, Android, iOS, or Others.
-- Passive Mode bypasses all these checks if enabled.
 
 ### Token Security
 - One-time use tokens with a configurable expiration (default maximum lifetime: 24 hours).
